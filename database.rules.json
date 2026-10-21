@@ -1,0 +1,28 @@
+{
+  "rules": {
+    "users": {
+      "$uid": {
+        ".read": "auth != null",
+        ".write": "auth != null && (auth.uid === $uid || root.child('users').child(auth.uid).child('role').val() === 'admin')"
+      }
+    },
+    "logs": {
+      ".read": "auth != null",
+      "$logId": {
+        ".write": "auth != null && (root.child('users').child(auth.uid).child('role').val() === 'security' || root.child('users').child(auth.uid).child('role').val() === 'warehouse' || root.child('users').child(auth.uid).child('role').val() === 'admin')"
+      }
+    },
+    "pre_registrations": {
+      ".read": "auth != null",
+      "$regId": {
+        ".write": "auth != null"
+      }
+    },
+    "guest_requests": {
+      ".read": "auth != null",
+      "$reqId": {
+        ".write": "auth != null"
+      }
+    }
+  }
+}
